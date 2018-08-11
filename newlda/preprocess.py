@@ -4,7 +4,6 @@ from nltk import PorterStemmer, RegexpTokenizer
 from stop_words import get_stop_words
 
 
-
 class Preprocessor(object):
     def __init__(self, max_workers=4):
         self.max_workers = max_workers
@@ -24,15 +23,17 @@ class Preprocessor(object):
     def process_docs(self, doc_list):
         with ProcessPoolExecutor(max_workers=self.max_workers) as executor:
             return list(executor.map(self.preprocess_doc, doc_list))
-    #
+
+
     def preprocess_doc_with_url(self, doc_with_url):
         url, content = doc_with_url
-   
+
         return url, self.preprocess_doc(content)
-   
-    def process_docs_with_urls(self, urldoc_list) :
+
+    def process_docs_with_urls(self, urldoc_list):
         with ProcessPoolExecutor(max_workers=self.max_workers) as executor:
             return list(executor.map(self.preprocess_doc_with_url, urldoc_list))
+
 
 class WithUrlPreprocessor(Preprocessor):
     def __init__(self, max_workers=4):
