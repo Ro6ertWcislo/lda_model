@@ -1,24 +1,24 @@
 import logging
 
+import sys
+
 from newlda.lda_model import LDA
 from newlda.file_parser import parse_dir_json
 from newlda.search_engine import SearchEngine
 
 
 def init_logger():
-    # create logger with 'spam_application'
     logger = logging.getLogger('lda_model')
     logger.setLevel(logging.DEBUG)
     # create file handler which logs even debug messages
     fh = logging.FileHandler('lda_model.log')
     fh.setLevel(logging.ERROR)
-    fh.setLevel(logging.WARNING)
 
     # create console handler with a higher log level
-    ch = logging.StreamHandler()
+    ch = logging.StreamHandler(stream=sys.stdout)
     ch.setLevel(logging.INFO)
     ch.setLevel(logging.DEBUG)
-    ch.setLevel(logging.WARNING)
+
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)

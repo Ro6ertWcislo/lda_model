@@ -1,8 +1,11 @@
 import json
+import logging
 
 import os
 
 from codecs import open
+
+log = logging.getLogger('lda_model')
 
 
 def parse_wiki_dump(filename, limit=None):
@@ -25,17 +28,23 @@ def parse_wiki_dump(filename, limit=None):
 
 def parse_dir_json(dirpath, limit=None):
     documents = []
-    for file in os.listdir(dirpath):
-        with open(dirpath + '/' + file, "r", encoding='utf-8', errors='replace') as f:
-            data = json.load(f)
-            content = try_parse(data, 'title') + ' ' + \
-                      ' '.join(try_parse(data, 'author')) + ' ' + \
-                      try_parse(data, 'description') + ' ' + \
-                      try_parse(data, 'content')
+    dirs = next(os.walk(dirpath))[1]
+    for dir in dirs:
+        sub_dirpath = dirpath + dir
+        for file in os.listdir(sub_dirpath):
+            try:
+                with open(sub_dirpath + '/' + file, "r", encoding='utf-8', errors='replace') as f:
+                    data = json.load(f)
+                    content = try_parse(data, 'title') + ' ' + \
+                              ' '.join(try_parse(data, 'author')) + ' ' + \
+                              try_parse(data, 'description') + ' ' + \
+                              try_parse(data, 'content')
 
-            documents.append((data['url'], content))
-        if limit is not None and len(documents) > limit:
-            return documents
+                    documents.append((data['url'], content))
+                if limit is not None and len(documents) > limit:
+                    return documents
+            except:
+                log.error('Could not parse file: %s', file)
     return documents
 
 

@@ -15,7 +15,7 @@ class LDA(object):
                  lda_filename="lda_model",
                  dict_filename="dictionary",
                  preprocessor=None):
-        self.log = logging.getLogger('lda_model.LDA')
+        self.log = logging.getLogger('lda_model')
         self.lda_filename = lda_filename
         self.dict_filename = dict_filename
         self.passes = passes
