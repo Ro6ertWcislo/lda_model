@@ -28,8 +28,19 @@ def parse_dir_json(dirpath, limit=None):
     for file in os.listdir(dirpath):
         with open(dirpath + '/' + file, "r", encoding='utf-8', errors='replace') as f:
             data = json.load(f)
-            content = data['title'] + ' ' + ' '.join(data['author']) + ' ' + data['description'] + ' ' + data['content']
+            content = try_parse(data, 'title') + ' ' + \
+                      ' '.join(try_parse(data, 'author')) + ' ' + \
+                      try_parse(data, 'description') + ' ' + \
+                      try_parse(data, 'content')
+
             documents.append((data['url'], content))
         if limit is not None and len(documents) > limit:
             return documents
     return documents
+
+
+def try_parse(data, field):
+    try:
+        return data[field]
+    except:
+        return ''
