@@ -2,25 +2,26 @@ from gensim import similarities
 from gensim.corpora import Dictionary
 from gensim.models import LdaMulticore
 
-from newlda.preprocess import Preprocessor
-
-# config file here?
+from model.lda.config.config import LdaConfig
+from model.lda.preprocess import Preprocessor
 
 
 class SearchEngine(object):
     def __init__(self,
                  lda_model=None,
                  dictionary=None,
-                 lda_path='lda_model',
-                 dictionary_path='dictionary',
                  max_workers=4):
-        self.lda_model = lda_model if lda_model is not None else LdaMulticore.load(lda_path)
-        self.dictionary = dictionary if dictionary is not None else Dictionary.load(dictionary_path)
+        self.lda_model = lda_model
+        self.dictionary = dictionary
         self.preprocessor = Preprocessor(max_workers=max_workers)
         self.index = None
         self.urls = None
 
-    def infer(self, document) :
+    def load_model(self, model_path, dict_path):
+        self.lda_model = LdaMulticore.load(model_path)
+        self.dictionary = Dictionary.load(dict_path)
+
+    def infer(self, document):
         text = self.preprocessor.preprocess_doc(document)
         bow = self.dictionary.doc2bow(text)
         return self.lda_model[bow]
@@ -34,7 +35,10 @@ class SearchEngine(object):
         urls, doc_bows = zip(*self.infer_all(docs_with_urls))
         self.urls = urls
         self.index = similarities.SparseMatrixSimilarity(doc_bows, num_features=400)
-        self.index.save('/people/plgwciro/z4/z4/data/index')
+
+    def save_index(self, index_path):
+        self.index.save(index_path)
+
         # self.save('urls', self.urls)
 
     # def save(self, filename, what):

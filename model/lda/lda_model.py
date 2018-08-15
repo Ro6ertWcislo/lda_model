@@ -2,9 +2,9 @@ import logging
 from concurrent.futures import ProcessPoolExecutor
 
 from gensim.corpora import Dictionary
-from gensim.models import LdaModel, LdaMulticore
+from gensim.models import LdaMulticore
 
-from newlda.preprocess import Preprocessor, WithUrlPreprocessor
+from model.lda.preprocess import Preprocessor, WithUrlPreprocessor
 
 
 class LDA(object):
