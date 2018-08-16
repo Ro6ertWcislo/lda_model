@@ -3,7 +3,7 @@ import sys
 from model.lda.lda_model import LDA
 from model.util.file_parser import parse_dir_json
 from search_engine.lda.search_engine import SearchEngine
-from model.lda.config.config import LdaConfig
+from configuration.lda.config import LdaConfig
 
 if __name__ == '__main__':
     config = LdaConfig(sys.argv[1]).get_current_config()
