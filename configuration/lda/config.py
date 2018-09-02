@@ -17,7 +17,7 @@ class LdaConfig(object):
 
     def get_current_config(self):
         cfg = None
-        with open("configuration/lda/config.yml", 'r') as ymlfile:
+        with open("/mnt/auto/people/plgwciro/mors/configuration/lda/config.yml", 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
 
         if cfg is not None:
