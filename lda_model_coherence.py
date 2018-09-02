@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     config = LdaConfig(sys.argv[1], 'lda_model').get_current_config()
 
-    docs, _ = zip(*parse_dir_json(config['data_path']))
+    _, docs = zip(*parse_dir_json(config['data_path']))
 
     preprocessed_docs = Preprocessor(max_workers=config['max_workers']).process_docs(docs)
 
