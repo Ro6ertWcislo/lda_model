@@ -17,4 +17,13 @@ if __name__ == '__main__':
     searchEngine.dummy_index(docs)
 
     searchEngine.save_index(config['index_path'], config['url_path'])
-    searchEngine.infer("what a wonderfull day")
+
+    print(searchEngine.dummy_search("israel bank money")[:3])
+    print(searchEngine.dummy_search("biggest wars in europe history")[:3])
+
+    print(searchEngine.dummy_search("bitcoin and blockchain are future")[:3])
+
+    print(searchEngine.dummy_search("gay marriages in europe")[:3])
+
+    print(searchEngine.dummy_search("USA trump foreign policy")[:3])
+
