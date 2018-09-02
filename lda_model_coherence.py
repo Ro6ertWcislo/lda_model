@@ -34,6 +34,6 @@ if __name__ == '__main__':
 
     import csv
 
-    with open(config['coherence_path'], "w") as csv_file:
+    with open(config['coherence_path'], "a") as csv_file:
         writer = csv.writer(csv_file, delimiter=';')
         writer.writerow([config['topics'], coherence_lda])
