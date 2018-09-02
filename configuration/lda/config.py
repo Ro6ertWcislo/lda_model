@@ -10,7 +10,7 @@ class InvalidConfigException(Exception):
 
 @singleton
 class LdaConfig(object):
-    def __init__(self, profile,logger_name):
+    def __init__(self, profile, logger_name):
         self.profile = profile
         self.log = logging.getLogger(logger_name)
         self.current_config = None
